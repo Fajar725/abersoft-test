@@ -22,7 +22,7 @@ class ProductView extends StatefulWidget {
 }
 
 class _ProductViewState extends State<ProductView> {
-  final BaseRepositoryInterface baseRepository = BaseRepositoryMock.init();
+  final BaseRepositoryInterface baseRepository = BaseRepository.init();
 
   final Rx<Products> products = Rx(Products());
   final Rx<RestEnum> productRestStatus = Rx(RestEnum.loading);

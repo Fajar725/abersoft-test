@@ -4,9 +4,9 @@ import 'package:abersoft_test/const/custom_button.dart';
 import 'package:abersoft_test/const/custom_color.dart';
 import 'package:abersoft_test/const/custom_dialog.dart';
 import 'package:abersoft_test/const/custom_text_style.dart';
-import 'package:abersoft_test/const/image_manipulator.dart';
 import 'package:abersoft_test/infra/enum/custom_exception_enum.dart';
 import 'package:abersoft_test/model/product_request.dart';
+import 'package:abersoft_test/repository/base_repository.dart';
 import 'package:abersoft_test/repository/base_repository_interface.dart';
 import 'package:abersoft_test/repository/base_repository_mock.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +21,7 @@ class CreateProduct extends StatefulWidget {
 }
 
 class _CreateProductState extends State<CreateProduct> with WidgetsBindingObserver {
-  final BaseRepositoryInterface baseRepository = BaseRepositoryMock.init();
+  final BaseRepositoryInterface baseRepository = BaseRepository.init();
   final _formKey = GlobalKey<FormState>();
   bool isOpen = false;
   final ImagePicker _picker = ImagePicker();
