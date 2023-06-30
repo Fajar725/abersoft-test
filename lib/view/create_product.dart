@@ -164,7 +164,7 @@ class _CreateProductState extends State<CreateProduct> with WidgetsBindingObserv
     );
 
     if (pickedFile != null) {
-      image.value = await rezise(File(pickedFile.path));
+      image.value = File(pickedFile.path);
     } else {
       debugPrint('No image selected.');
     }
