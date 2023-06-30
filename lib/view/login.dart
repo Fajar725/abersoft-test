@@ -52,7 +52,7 @@ class _LoginState extends State<Login> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 

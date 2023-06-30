@@ -10,7 +10,7 @@ Future<File> rezise(File image) async {
 
     final img.Image originalImage = img.decodeImage(imageBytes)!;
 
-    final int orientation = originalImage.exif..!;
+    final int orientation = originalImage.exif.exifIfd.orientation!;
     final int height = orientation == 6 || orientation == 8 ? originalImage.width : originalImage.height;
     final int width = orientation == 6 || orientation == 8 ? originalImage.height : originalImage.width;
 

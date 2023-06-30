@@ -10,6 +10,8 @@ class Strings extends Translations {
       'UNAUTHORIZE_MESSAGE' : 'Session Expired',
       'UNAUTHORIZE_DESC' : 'Session Expired, please re-login',
       'ERROR_TITLE_MESSAGE': 'Error Occured',
+      'SUCCESS_TITLE_MESSAGE': 'Success',
+      'SUCCESS_MESSAGE': 'Success submit data',
       'UNEXCPECTED_MESSAGE' : "Error Ocurrent, Try Again Later or Contact Admin"
     },
     'id_ID': {
@@ -19,6 +21,8 @@ class Strings extends Translations {
       'UNAUTHORIZE_MESSAGE' : 'Sesi Habis',
       'UNAUTHORIZE_DESC' : 'Sesi anda telah habis, mohon login ulang',
       'ERROR_TITLE_MESSAGE' : 'Terjadi Kesalahan',
+      'SUCCESS_TITLE_MESSAGE': 'Berhasil',
+      'SUCCESS_MESSAGE': 'Berhasil menyimpan data',
       'UNEXCPECTED_MESSAGE' : "Terjadi Kesalahan, Tunggu Sesaat Lagi atau Hubungi Admin"
     }
   };

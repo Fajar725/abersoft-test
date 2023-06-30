@@ -57,7 +57,7 @@ class _CreateProductState extends State<CreateProduct> with WidgetsBindingObserv
 
   @override
   void dispose() {
-
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -66,17 +66,17 @@ class _CreateProductState extends State<CreateProduct> with WidgetsBindingObserv
     try {
       showLoadingDialog();
 
-      // await baseRepository.createProduct(ProductRequest(
-      //   productName: name,
-      //   productImage: password,
-      //   productDecription: description,
-      // ));
+      await baseRepository.createProduct(ProductRequest(
+        productName: name,
+        productImage: image.value,
+        productDecription: description,
+      ));
 
       Get.back();
       showMessageWidget(
         'SUCCESS_TITLE_MESSAGE'.tr,
-        title: 'SUCCESS_TITLE_MESSAGE'.tr,
-        action: () => Get.back()
+        title: 'SUCCESS_MESSAGE'.tr,
+        action: () => Get.back<bool>(result: true)
       );
 
     } on ForbiddenException catch (e){
@@ -178,98 +178,100 @@ class _CreateProductState extends State<CreateProduct> with WidgetsBindingObserv
       appBar: AppBar(
         title: const Text('Create Product', style: montserratBold16White),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Obx(() {
-                var rx = image.value;
-                var rxError = imgError.value;
-
-                return AspectRatio(
-                  aspectRatio: 16/9,
-                  child: InkWell(
-                    onTap: () => showChoiceImagePicker(),
-                    child: Ink(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        border: rxError ? Border.all(color: red, width: 1.5) : null,
-                        color: textDarkGrey,
-                        image: rx != null ? DecorationImage(
-                          image: FileImage(
-                            rx
-                          ),
-                          fit: BoxFit.cover
-                        ) : null
-                      ),
-                      child: rx != null ? const Center(
-                        child: Text('Tekan untuk masukkan gambar', style: montserratRegular12Black),
-                      ) : const SizedBox(),
-                    )
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Obx(() {
+                  var rx = image.value;
+                  var rxError = imgError.value;
+      
+                  return AspectRatio(
+                    aspectRatio: 16/9,
+                    child: InkWell(
+                      onTap: () => showChoiceImagePicker(),
+                      child: Ink(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          border: rxError ? Border.all(color: red, width: 1.5) : null,
+                          color: dragIconGrey,
+                          image: rx != null ? DecorationImage(
+                            image: FileImage(
+                              rx
+                            ),
+                            fit: BoxFit.cover
+                          ) : null
+                        ),
+                        child: rx == null ? const Center(
+                          child: Text('Tekan untuk masukkan gambar', style: montserratRegular12Black),
+                        ) : const SizedBox(),
+                      )
+                    ),
+                  );
+                }),
+                const SizedBox(height: 20),
+                TextFormField(
+                  style: montserratRegular12Blue,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: const BorderSide(color: logisBlue),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    labelText: "Nama",
+                    labelStyle: montserratRegular12Grey,
+                    floatingLabelStyle: montserratRegular12Blue,
                   ),
-                );
-              }),
-              const SizedBox(height: 20),
-              TextFormField(
-                style: montserratRegular12Blue,
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: const BorderSide(color: logisBlue),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  labelText: "Nama",
-                  labelStyle: montserratRegular12Grey,
-                  floatingLabelStyle: montserratRegular12Blue,
+                  validator: nullValidator,
+                  onSaved: (value) => name = value,
                 ),
-                validator: nullValidator,
-                onSaved: (value) => name = value,
-              ),
-              const SizedBox(height: 10),
-              TextFormField(
-                style: montserratRegular12Blue,
-                maxLines: 6,
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: const BorderSide(color: logisBlue),
+                const SizedBox(height: 10),
+                TextFormField(
+                  style: montserratRegular12Blue,
+                  maxLines: 6,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: const BorderSide(color: logisBlue),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    labelText: "Deskripsi",
+                    labelStyle: montserratRegular12Grey,
+                    floatingLabelStyle: montserratRegular12Blue,
                   ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  labelText: "Deskripsi",
-                  labelStyle: montserratRegular12Grey,
-                  floatingLabelStyle: montserratRegular12Blue,
+                  validator: nullValidator,
+                  onSaved: (value) => description = value,
                 ),
-                validator: nullValidator,
-                onSaved: (value) => description = value,
-              ),
-              const SizedBox(height: 30),
-              simpliedButton(
-                'SUBMIT'.tr, 
-                elevation: 2, 
-                backgroundColor: logisBlue, 
-                textStyle: montserratBold14White, 
-                action: (){
-                  if(_formKey.currentState!.validate() && image.value != null){
-                    _formKey.currentState!.save();
-                    authenticate();
-                  } else {
-                    imgError.value = true;
+                const SizedBox(height: 30),
+                simpliedButton(
+                  'SUBMIT'.tr, 
+                  elevation: 2, 
+                  backgroundColor: logisBlue, 
+                  textStyle: montserratBold14White, 
+                  action: (){
+                    if(_formKey.currentState!.validate() && image.value != null){
+                      _formKey.currentState!.save();
+                      authenticate();
+                    } else {
+                      imgError.value = true;
+                    }
                   }
-                }
-              )
-            ]
+                )
+              ]
+            )
           )
-        )
+        ),
       )
     );
   }

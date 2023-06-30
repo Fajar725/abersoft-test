@@ -179,6 +179,7 @@ class _ProductViewState extends State<ProductView> {
 
         if(rxStatus == RestEnum.loading) {
           return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
@@ -225,7 +226,15 @@ class _ProductViewState extends State<ProductView> {
         }
 
         if(rxStatus == RestEnum.notAcceptable) {
-
+          return Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.error, color: red, size: 46),
+                Text('ERROR_TITLE_MESSAGE'.tr),
+              ],
+            ),
+          );
         }
 
         return Column(
